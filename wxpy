@@ -30,16 +30,11 @@ def reply_my_friend(msg):
             return '设置成功，已暂停机器人服务'
         elif msg.text == "启动":
             model[msg.sender.name.translate(non_bmp_map)] = "0"
-            return '设置成功，已启动机器人服务\
-                        请回复1或者2选择机器人（1：图灵机器人，2：小艾机器人）'
+            return '设置成功，已启动机器人服务。请回复1或者2选择机器人（1：图灵机器人，2：小艾机器人）'
         elif msg.text == "机器人":
             return '当前机器人是' + botM[model[msg.sender.name.translate(non_bmp_map)]]
         if model[msg.sender.name.translate(non_bmp_map)] == '0' and msg.text != '1' and msg.text != '2':
-            return 'Hi,我是Yoler的智能管家，很高兴为您服务\
-                        请回复1或者2选择机器人（1：图灵机器人，2：小艾机器人）\
-                        回复“机器人”查看当前服务的机器人\
-                        回复“停止”可关闭机器人\
-                        回复“启动”可重启机器人'
+            return 'Hi,我是Yoler的智能管家，很高兴为您服务。请回复1或者2选择机器人（1：图灵机器人，2：小艾机器人）。回复“机器人”查看当前服务的机器人。回复“停止”可关闭机器人。回复“启动”可重启机器人'
         elif model[msg.sender.name.translate(non_bmp_map)] == '1' and msg.text != '1' and msg.text != '2':
             tuling.do_reply(msg)
         elif model[msg.sender.name.translate(non_bmp_map)] == '2' and msg.text != '1' and msg.text != '2':
@@ -52,7 +47,4 @@ def reply_my_friend(msg):
 def ig(msg):
         return
 embed()
-
-
-
 
