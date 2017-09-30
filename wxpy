@@ -1,1 +1,22 @@
-python
+from wxpy import *
+
+bot = Bot(cache_path = True)
+
+tuling = Tuling(api_key='ffd1fe4aaa364ff89e2faf3d2e32cb4d')
+
+my_friends = bot.friends()
+non_bmp_map = dict.fromkeys(range(0x10000, sys.maxunicode + 1), 0xfffd)
+for i in my_friends:
+        # print(i.name.translate(non_bmp_map))
+        if i.name == 'yoler':
+                i.send('hi')
+group = bot.groups(my_friends)
+@bot.register()
+def reply_my_friend(msg):
+        tuling.do_reply(msg)
+
+@bot.register(group)
+def ig(msg):
+        return
+embed()
+
