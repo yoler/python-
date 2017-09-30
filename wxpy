@@ -8,48 +8,51 @@ xiaoi = XiaoI('xOccmglcPP35', '3OjFsFqlFeTRS6kcNopY')
 my_friends = bot.friends()
 non_bmp_map = dict.fromkeys(range(0x10000, sys.maxunicode + 1), 0xfffd)
 
-model = '0'
+model = {}
 botM = {'0': '还没有选择机器人','1': '小图', '2': '小艾'}
 for i in my_friends:
         # print(i.name.translate(non_bmp_map))
+        model[i.name.translate(non_bmp_map)] = "0"
         if i.name == 'yoler':
                 i.send('hi')
 group = bot.groups()
-for i in my_friends:
-        @bot.register(i)
-        def reply_my_friend(msg):
-                global model, botM
-                if msg.text == '1':
-                      model = '1'
-                      return '设置成功，小图为你服务'
-                elif msg.text == "2":
-                        model = "2"
-                        return '设置成功，小艾为你服务'
-                elif msg.text == "停止":
-                        model = "3"
-                        return '设置成功，已暂停机器人服务'
-                elif msg.text == "启动":
-                        model = "0"
-                        return '设置成功，已启动机器人服务\
-                                请回复1或者2选择机器人（1：图灵机器人，2：小艾机器人）'
-                elif msg.text == "机器人":
-                        return '当前机器人是' + botM[model]
-                if model == '0' and msg.text != '1' and msg.text != '2':
-                        return 'Hi,我是Yoler的智能管家，很高兴为您服务\
-                                请回复1或者2选择机器人（1：图灵机器人，2：小艾机器人）\
-                                回复“机器人”查看当前服务的机器人\
-                                回复“停止”可关闭机器人\
-                                回复“启动”可重启机器人'
-                elif model == '1' and msg.text != '1' and msg.text != '2':
-                        tuling.do_reply(msg)
-                elif model == '2' and msg.text != '1' and msg.text != '2':
-                        xiaoi.do_reply(msg)
-                elif model == '3' and msg.text != '1' and msg.text != '2':
-                        return
+@bot.register()
+def reply_my_friend(msg):
+        global model, botM, non_bmp_map
+        if msg.text == '1':
+                model[msg.sender.name.translate(non_bmp_map)] = '1'
+                return '设置成功，小图为你服务'
+        elif msg.text == "2":
+            model[msg.sender.name.translate(non_bmp_map)] = "2"
+            return '设置成功，小艾为你服务'
+        elif msg.text == "停止":
+            model[msg.sender.name.translate(non_bmp_map)] = "3"
+            return '设置成功，已暂停机器人服务'
+        elif msg.text == "启动":
+            model[msg.sender.name.translate(non_bmp_map)] = "0"
+            return '设置成功，已启动机器人服务\
+                        请回复1或者2选择机器人（1：图灵机器人，2：小艾机器人）'
+        elif msg.text == "机器人":
+            return '当前机器人是' + botM[model[msg.sender.name.translate(non_bmp_map)]]
+        if model[msg.sender.name.translate(non_bmp_map)] == '0' and msg.text != '1' and msg.text != '2':
+            return 'Hi,我是Yoler的智能管家，很高兴为您服务\
+                        请回复1或者2选择机器人（1：图灵机器人，2：小艾机器人）\
+                        回复“机器人”查看当前服务的机器人\
+                        回复“停止”可关闭机器人\
+                        回复“启动”可重启机器人'
+        elif model[msg.sender.name.translate(non_bmp_map)] == '1' and msg.text != '1' and msg.text != '2':
+            tuling.do_reply(msg)
+        elif model[msg.sender.name.translate(non_bmp_map)] == '2' and msg.text != '1' and msg.text != '2':
+            xiaoi.do_reply(msg)
+        elif model[msg.sender.name.translate(non_bmp_map)] == '3' and msg.text != '1' and msg.text != '2':
+            return
 
 
 @bot.register(group)
 def ig(msg):
         return
 embed()
+
+
+
 
